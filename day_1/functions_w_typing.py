@@ -31,7 +31,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     func = sys.argv[1]
-    args = sys.argv[2:]
+    args: List[str] = sys.argv[2:]
 
     match func:
         case "greet":

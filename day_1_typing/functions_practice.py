@@ -1,14 +1,12 @@
 # functions_practice.py
-from typing import List, Tuple, Callable, Any
+from typing import Sequence, Callable
 
-def average(numbers: Tuple[int]) -> float:
-    total = sum(numbers)
-    return total / len(numbers)
+def average(numbers: Sequence[int]) -> float:
+    return sum(numbers) / len(numbers)
 
-def top_three(items: List[str], key: Callable[[str], Any]) -> List[str]:
+def top_three(items: list, key: Callable) -> list:
     """Return the top 3 items by key function."""
-    sorted_items = sorted(items, key=key, reverse=True)
-    return sorted_items[:3]
+    return sorted(items, key=key, reverse=True)[:3]
 
 def safe_divide(a: int, b: int, default: float = 0.0) -> float:
     try:
@@ -16,8 +14,7 @@ def safe_divide(a: int, b: int, default: float = 0.0) -> float:
     except ZeroDivisionError:
         return default
 
-def concat(strings: List[str], sep: str) -> str:
-    """Join list of strings with separator."""
+def concat(strings: list[str], sep: str) -> str:
     return sep.join(strings)
 
 def word_frequencies(text: str) -> dict[str, int]:

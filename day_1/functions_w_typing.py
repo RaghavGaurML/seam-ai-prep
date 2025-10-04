@@ -9,7 +9,7 @@ def add(a: int, b: int) -> int:
     """Return the sum of two integers."""
     return a + b
 
-def substract(a: int, b: int) -> int:
+def subtract(a: int, b: int) -> int:
     """Return the difference of two integers."""
     return a - b
 
@@ -39,7 +39,7 @@ if __name__ == "__main__":
         case "add":
             print(add(int(args[0]), int(args[1])))
         case "subtract":
-            print(substract(int(args[0]), int(args[1])))
+            print(subtract(int(args[0]), int(args[1])))
         case "multiply":
             print(multiply(int(args[0]), int(args[1])))
         case "divide":

@@ -16,6 +16,9 @@ __pycache__/
 # Jupyter notebooks
 .ipynb_checkpoints/
 
+# Python files
+extensions_testing.py
+
 # OS files
 .DS_Store
 Thumbs.db

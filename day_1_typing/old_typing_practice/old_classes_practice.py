@@ -1,5 +1,5 @@
 # Implement some classes with type hints
-from typing import List, Tuple
+from typing import List
 
 class Person:
     def __init__(self, name: str, age: int, job: None | str) -> None:

@@ -1,5 +1,5 @@
 # Implement simple functions with type hints
-from typing import List, Tuple
+from typing import List
 
 def greet(name: str) -> str:
     """Return a greeting message for the given name."""

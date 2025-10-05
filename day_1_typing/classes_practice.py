@@ -1,5 +1,6 @@
 # classes_practice.py
 
+
 class Product:
     def __init__(self, name: str, price: float, tags: list[str] | None = None) -> None:
         self.name = name

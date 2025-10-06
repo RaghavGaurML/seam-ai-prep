@@ -23,6 +23,9 @@ __pycache__/
 # Python files
 # extensions_testing.py
 
+# Python boilerplate (cookiecutter testing)
+/day_2_shell_venv_codebase/python-boilerplate/
+
 # OS files
 .DS_Store
 Thumbs.db

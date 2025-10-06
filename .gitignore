@@ -25,6 +25,7 @@ __pycache__/
 
 # Python boilerplate (cookiecutter testing)
 /day_2_shell_venv_codebase/python-boilerplate/
+/day_2_shell_venv_codebase/raghav-cookiecutter-python-boilerplate/
 
 # OS files
 .DS_Store

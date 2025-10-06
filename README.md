@@ -42,14 +42,14 @@ A focused **13-day study plan** to strengthen modern AI engineering skills — f
 
 ---
 
-## 🧩 Folder Structure
+## 🧩 Folder Structure (Tentative - Currently on Day 2)
 
 ```powershell
 seam-ai-prep/
 │
 ├── week1_foundations/
 │   ├── day1_typing/
-│   ├── day2_shell_venv/
+│   ├── day2_shell_venv_codebase/
 │   ├── day3_git/
 │   └── ...
 │

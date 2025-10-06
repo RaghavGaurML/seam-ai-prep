@@ -1,4 +1,8 @@
-﻿# Virtual environments
+﻿# Setup scripts
+# setup.ps1 # Adding setup.ps1 to main for study purposes
+# setup.sh
+
+# Virtual environments
 venv/
 .venv/
 ENV/

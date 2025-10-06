@@ -21,7 +21,7 @@ __pycache__/
 .ipynb_checkpoints/
 
 # Python files
-extensions_testing.py
+# extensions_testing.py
 
 # OS files
 .DS_Store

@@ -13,6 +13,16 @@ A focused **13-day study plan** to strengthen modern AI engineering skills — f
 
 ---
 
+## ⚙️ Recommended Setup (PowerShell)
+
+Run your setup script to create the virtual environment and install dependencies:
+
+```powershell
+# Run the setup script
+.\setup.ps1
+
+---
+
 ## 📅 13-Day Seam AI Prep Plan
 
 ### **Week 1 → Developer Foundations + Async / FastAPI**
@@ -60,5 +70,5 @@ seam-ai-prep/
 │
 ├── requirements.txt
 ├── pyproject.toml
-├── Makefile
+├── setup.ps1
 └── README.md

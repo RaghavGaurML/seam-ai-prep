@@ -1,0 +1,41 @@
+# Day 2: Seam AI Prep – pyproject.toml
+# Purpose:
+# 1. Define project metadata
+# 2. Configure tooling (black, ruff, mypy)
+# 3. Ensure reproducibility and consistency
+
+[project]
+name = "seam-ai-prep"                                                                   # Project name
+version = "0.1.0"                                                                       # Initial version
+description = "Seam AI prep project for learning FastAPI, Pydantic, and Python tooling"
+requires-python = ">=3.10"                                                              # Minimum Python version
+
+# Optional: Dependencies can go here if you want to build/distribute this project
+# dependencies = ["fastapi==0.115.0", "pydantic==2.3.0"]
+
+# Black code formatter configuration
+# This ensures consistent formatting across editors and CI
+[tool.black]
+line-length = 88           # Max characters per line
+target-version = ["py310"] # Python version compatibility
+
+# Ruff linter configuration
+# This ensures consistent linting rules for imports, typing, etc.
+[tool.ruff]
+# Extend select rules to include import order (I) and typing (UP)
+extend-select = ["I", "UP"]
+line-length = 88            # Match Black's line length
+# You can also add ignore = ["E501"] to ignore specific rules
+
+# Mypy static type checker configuration
+# Optional: enable this if using type checking in your project
+[tool.mypy]
+python_version = "3.10"
+check_untyped_defs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
+
+# Notes:
+# - setup.ps1 still installs packages and creates .venv
+# - .vscode/settings.json still configures editor integration
+# - pyproject.toml ensures CLI tools, CI, and other devs use consistent settings

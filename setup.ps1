@@ -13,7 +13,26 @@ if (-not (Test-Path ".venv")) {
 # Activate the virtual environment
 & .\.venv\Scripts\Activate.ps1
 
-# Optionally upgrade pip once (uncomment if needed)
+# --- SAFETY CHECK: Ensure we're using the correct Python and pip ---
+$pythonPath = (Get-Command python).Source
+$pipPath = (Get-Command pip).Source
+$venvPath = (Resolve-Path ".\.venv").Path
+
+if ($pythonPath -notlike "$venvPath*") {
+    Write-Host "[ERROR] Python is not running from .venv! Currently using: $pythonPath"
+    Write-Host "Aborting setup to avoid global installs."
+    exit 1
+}
+
+if ($pipPath -notlike "$venvPath*") {
+    Write-Host "[ERROR] Pip is not running from .venv! Currently using: $pipPath"
+    Write-Host "Aborting setup to avoid global installs."
+    exit 1
+}
+
+Write-Host "[SAFE] Python and pip are correctly using .venv."
+
+# Upgrade pip
 python -m pip install --upgrade pip
 
 # Install dependencies if requirements.txt exists
@@ -36,7 +55,6 @@ if ($runTests -eq "y") {
 }
 
 # Create VSCode settings.json if it doesn't exist
-# Ensure .vscode folder exists
 if (-not (Test-Path ".vscode")) {
     New-Item -ItemType Directory -Path ".vscode" | Out-Null
 }
@@ -45,7 +63,6 @@ $settingsPath = ".vscode\settings.json"
 
 if (-not (Test-Path $settingsPath)) {
 
-    # JSON content as PowerShell hashtable
     $settings = @{
         "python.pythonPath" = "venv\\Scripts\\python.exe"
         "editor.formatOnSave" = $true
@@ -65,7 +82,6 @@ if (-not (Test-Path $settingsPath)) {
         }
     }
 
-    # Convert hashtable to JSON and save
     $settings | ConvertTo-Json -Depth 5 | Out-File -Encoding utf8 $settingsPath
     Write-Host "[DONE] .vscode/settings.json created."
 

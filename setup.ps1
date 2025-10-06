@@ -1,68 +1,82 @@
 # setup.ps1
-
 Write-Host "[SETUP] Starting Seam AI Prep environment setup..."
 
-# Create or reuse virtual environment
-if (-not (Test-Path ".venv")) {
+# Define paths for root .venv and the day-specific folder
+$rootVenvPath = ".venv"
+$dayFolder = "day_2_shell_venv_codebase"
+$requirementsFile = Join-Path $dayFolder "requirements.txt"
+$pyprojectFile = Join-Path $dayFolder "pyproject.toml"
+
+# Create or reuse the virtual environment
+if (-not (Test-Path $rootVenvPath)) {
     Write-Host "[SETUP] Creating virtual environment..."
-    python -m venv .venv
+    python -m venv $rootVenvPath
 } else {
     Write-Host "[INFO] Using existing virtual environment..."
 }
 
 # Activate the virtual environment
-& .\.venv\Scripts\Activate.ps1
+& "$rootVenvPath\Scripts\Activate.ps1"
 
-# --- SAFETY CHECK: Ensure we're using the correct Python and pip ---
+# SAFETY CHECK: Ensure Python and pip are running from the .venv
 $pythonPath = (Get-Command python).Source
 $pipPath = (Get-Command pip).Source
-$venvPath = (Resolve-Path ".\.venv").Path
+$venvResolvedPath = (Resolve-Path $rootVenvPath).Path
 
-if ($pythonPath -notlike "$venvPath*") {
-    Write-Host "[ERROR] Python is not running from .venv! Currently using: $pythonPath"
+if ($pythonPath -notlike "$venvResolvedPath*") {
+    Write-Host "[ERROR] Python is not running from $rootVenvPath! Currently using: $pythonPath"
     Write-Host "Aborting setup to avoid global installs."
     exit 1
 }
 
-if ($pipPath -notlike "$venvPath*") {
-    Write-Host "[ERROR] Pip is not running from .venv! Currently using: $pipPath"
+if ($pipPath -notlike "$venvResolvedPath*") {
+    Write-Host "[ERROR] Pip is not running from $rootVenvPath! Currently using: $pipPath"
     Write-Host "Aborting setup to avoid global installs."
     exit 1
 }
 
-Write-Host "[SAFE] Python and pip are correctly using .venv."
+Write-Host "[SAFE] Python and pip are correctly using $rootVenvPath."
 
-# Upgrade pip
+# Upgrade pip to latest version
 python -m pip install --upgrade pip
 
-# Install dependencies if requirements.txt exists
-if (Test-Path "requirements.txt") {
-    Write-Host "[SETUP] Installing dependencies from requirements.txt..."
-    pip install -r requirements.txt
+# Install day-specific dependencies from requirements.txt if it exists
+if (Test-Path $requirementsFile) {
+    Write-Host "[SETUP] Installing dependencies from $requirementsFile..."
+    pip install -r $requirementsFile
 } else {
-    Write-Host "[WARN] No requirements.txt found. Skipping dependency install."
+    Write-Host "[WARN] No requirements.txt found for $dayFolder. Skipping dependency install."
 }
 
-# Run tests if tests folder exists (optional)
+# Copy day-specific pyproject.toml to root if it exists
+if (Test-Path $pyprojectFile) {
+    Write-Host "[SETUP] Copying $pyprojectFile to root project folder..."
+    Copy-Item -Path $pyprojectFile -Destination "pyproject.toml" -Force
+} else {
+    Write-Host "[WARN] No pyproject.toml found for $dayFolder. Skipping."
+}
+
+# Prompt to run tests from the day folder if they exist
 $runTests = Read-Host "Run tests? (y/n)"
 if ($runTests -eq "y") {
-    if (Test-Path tests) {
-        Write-Host "[SETUP] Running tests..."
-        pytest -q
+    $testsPath = Join-Path $dayFolder "tests"
+    if (Test-Path $testsPath) {
+        Write-Host "[SETUP] Running tests from $testsPath..."
+        pytest -q $testsPath
     } else {
-        Write-Host "[WARN] No tests folder found."
+        Write-Host "[WARN] No tests folder found for $dayFolder."
     }
 }
 
-# Create VSCode settings.json if it doesn't exist
-if (-not (Test-Path ".vscode")) {
-    New-Item -ItemType Directory -Path ".vscode" | Out-Null
+# Create VSCode .vscode folder if it doesn't exist
+$vscodeFolder = ".vscode"
+if (-not (Test-Path $vscodeFolder)) {
+    New-Item -ItemType Directory -Path $vscodeFolder | Out-Null
 }
 
-$settingsPath = ".vscode\settings.json"
-
+# Create VSCode settings.json if it doesn't exist
+$settingsPath = Join-Path $vscodeFolder "settings.json"
 if (-not (Test-Path $settingsPath)) {
-
     $settings = @{
         "python.pythonPath" = "venv\\Scripts\\python.exe"
         "editor.formatOnSave" = $true
@@ -84,7 +98,6 @@ if (-not (Test-Path $settingsPath)) {
 
     $settings | ConvertTo-Json -Depth 5 | Out-File -Encoding utf8 $settingsPath
     Write-Host "[DONE] .vscode/settings.json created."
-
 } else {
     Write-Host "[INFO] .vscode/settings.json already exists. Skipping creation."
 }

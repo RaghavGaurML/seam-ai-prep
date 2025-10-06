@@ -1,5 +1,10 @@
 # 📘 Seam AI Prep
 
+![Python](https://img.shields.io/badge/python-3.11-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.100.0-lightgrey?logo=fastapi)
+![Pydantic](https://img.shields.io/badge/Pydantic-2.3-blue?logo=pydantic)
+![License](https://img.shields.io/badge/license-MIT-green)
+
 A focused **13-day study plan** to strengthen modern AI engineering skills — from solid Python foundations to async FastAPI, LangGraph, and LLM integration.
 
 ---
@@ -20,6 +25,7 @@ Run your setup script to create the virtual environment and install dependencies
 ```powershell
 # Run the setup script
 .\setup.ps1
+```
 
 ---
 

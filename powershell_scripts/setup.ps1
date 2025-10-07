@@ -8,7 +8,7 @@ Set-Location $projectRoot
 
 # Define paths for root .venv and the day-specific folder
 $rootVenvPath = ".venv"
-$dayFolder = "week1_foundations/day_2_shell_venv_codebase"
+$dayFolder = "week_1_foundations/day_2_shell_venv_codebase"
 $requirementsFile = Join-Path $dayFolder "requirements.txt"
 $pyprojectFile = Join-Path $dayFolder "pyproject.toml"
 

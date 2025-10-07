@@ -74,7 +74,7 @@ seam-ai-prep/
 ├── week1_foundations/
 │   ├── day1_typing/
 │   ├── day2_shell_venv_codebase/
-│   ├── day3_git/
+│   ├── day3_gitworkflows/
 │   └── ...
 │
 ├── week2_langgraph_llm/

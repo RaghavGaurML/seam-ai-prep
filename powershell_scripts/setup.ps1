@@ -54,12 +54,12 @@ if (Test-Path $requirementsFile) {
 }
 
 # Copy day-specific pyproject.toml to root if it exists
-if (Test-Path $pyprojectFile) {
-    Write-Host "[SETUP] Copying $pyprojectFile to root project folder..."
-    Copy-Item -Path $pyprojectFile -Destination "pyproject.toml" -Force
-} else {
-    Write-Host "[WARN] No pyproject.toml found for $dayFolder. Skipping."
-}
+# if (Test-Path $pyprojectFile) {
+#     Write-Host "[SETUP] Copying $pyprojectFile to root project folder..."
+#     Copy-Item -Path $pyprojectFile -Destination "pyproject.toml" -Force
+# } else {
+#     Write-Host "[WARN] No pyproject.toml found for $dayFolder. Skipping."
+# }
 
 # Prompt to run tests from the day folder if they exist
 $runTests = Read-Host "Run tests? (y/n)"

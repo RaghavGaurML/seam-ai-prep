@@ -1,2 +1,3 @@
 *.py linguist-language=Python
 *.ps1 linguist-language=PowerShell
+justfile linguist-vendored

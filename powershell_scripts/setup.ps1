@@ -1,18 +1,19 @@
 # powershell_scripts/setup.ps1
 Write-Host "[SETUP] Starting Seam AI Prep environment setup..."
 
-# Get project root directory (one level up from this script)
+# Determine project root (one level up from this script)
 $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $projectRoot = Split-Path -Parent $scriptPath
 Set-Location $projectRoot
 
-# Define paths for root .venv and the day-specific folder
+# Define paths
 $rootVenvPath = ".venv"
-$dayFolder = "week_1_foundations/day_2_shell_venv_codebase"
-$requirementsFile = Join-Path $dayFolder "requirements.txt"
-$pyprojectFile = Join-Path $dayFolder "pyproject.toml"
+$requirementsFile = "requirements.txt"
+$pyprojectFile = "pyproject.toml"
 
-# Create or reuse the virtual environment
+# -------------------------------------------------------
+# 1. Create or reuse virtual environment
+# -------------------------------------------------------
 if (-not (Test-Path $rootVenvPath)) {
     Write-Host "[SETUP] Creating virtual environment..."
     python -m venv $rootVenvPath
@@ -23,7 +24,9 @@ if (-not (Test-Path $rootVenvPath)) {
 # Activate the virtual environment
 & "$rootVenvPath\Scripts\Activate.ps1"
 
-# SAFETY CHECK: Ensure Python and pip are running from the .venv
+# -------------------------------------------------------
+# 2. Safety check – ensure Python and pip come from .venv
+# -------------------------------------------------------
 $pythonPath = (Get-Command python).Source
 $pipPath = (Get-Command pip).Source
 $venvResolvedPath = (Resolve-Path $rootVenvPath).Path
@@ -42,57 +45,51 @@ if ($pipPath -notlike "$venvResolvedPath*") {
 
 Write-Host "[SAFE] Python and pip are correctly using $rootVenvPath."
 
-# Upgrade pip to latest version
+# -------------------------------------------------------
+# 3. Upgrade pip
+# -------------------------------------------------------
 python -m pip install --upgrade pip
 
-# Install day-specific dependencies from requirements.txt if it exists
+# -------------------------------------------------------
+# 4. Install dependencies
+# -------------------------------------------------------
 if (Test-Path $requirementsFile) {
     Write-Host "[SETUP] Installing dependencies from $requirementsFile..."
     pip install -r $requirementsFile
 } else {
-    Write-Host "[WARN] No requirements.txt found for $dayFolder. Skipping dependency install."
+    Write-Host "[WARN] No requirements.txt found in root. Skipping dependency install."
 }
 
-# Copy day-specific pyproject.toml to root if it exists
-# if (Test-Path $pyprojectFile) {
-#     Write-Host "[SETUP] Copying $pyprojectFile to root project folder..."
-#     Copy-Item -Path $pyprojectFile -Destination "pyproject.toml" -Force
-# } else {
-#     Write-Host "[WARN] No pyproject.toml found for $dayFolder. Skipping."
-# }
-
-# Prompt to run tests from the day folder if they exist
-$runTests = Read-Host "Run tests? (y/n)"
-if ($runTests -eq "y") {
-    $testsPath = Join-Path $dayFolder "tests"
-    if (Test-Path $testsPath) {
-        Write-Host "[SETUP] Running tests from $testsPath..."
-        pytest -q $testsPath
-    } else {
-        Write-Host "[WARN] No tests folder found for $dayFolder."
-    }
+# -------------------------------------------------------
+# 5. Verify pyproject.toml exists
+# -------------------------------------------------------
+if (Test-Path $pyprojectFile) {
+    Write-Host "[INFO] pyproject.toml detected — tools will use this for config."
+} else {
+    Write-Host "[WARN] No pyproject.toml found. Linting/config tools may not function properly."
 }
 
-# Create VSCode .vscode folder if it doesn't exist
+# -------------------------------------------------------
+# 6. Create VSCode workspace settings if not present
+# -------------------------------------------------------
 $vscodeFolder = ".vscode"
 if (-not (Test-Path $vscodeFolder)) {
     New-Item -ItemType Directory -Path $vscodeFolder | Out-Null
 }
 
-# Create VSCode settings.json if it doesn't exist
 $settingsPath = Join-Path $vscodeFolder "settings.json"
 if (-not (Test-Path $settingsPath)) {
     $settings = @{
         "python.defaultInterpreterPath" = ".venv\\Scripts\\python.exe"
         "editor.formatOnSave" = $true
         "editor.codeActionsOnSave" = @{
-            "source.organizeImports" = $true
+            "source.organizeImports" = "explicit"
         }
         "python.formatting.provider" = "black"
         "python.sortImports.args" = @("--profile", "black")
         "python.linting.enabled" = $true
         "python.linting.ruffEnabled" = $true
-        "python.linting.ruffArgs" = @("--fix")
+        "python.linting.mypyEnabled" = $true
         "python.linting.pylintEnabled" = $false
         "python.languageServer" = "None"
         "[powershell]" = @{
@@ -104,6 +101,18 @@ if (-not (Test-Path $settingsPath)) {
     Write-Host "[DONE] .vscode/settings.json created."
 } else {
     Write-Host "[INFO] .vscode/settings.json already exists. Skipping creation."
+}
+
+# -------------------------------------------------------
+# 7. Optional: Prompt to run tests (if any exist)
+# -------------------------------------------------------
+$testsPath = "tests"
+if (Test-Path $testsPath) {
+    $runTests = Read-Host "Run tests in /tests? (y/n)"
+    if ($runTests -eq "y") {
+        Write-Host "[SETUP] Running pytest..."
+        pytest -q $testsPath
+    }
 }
 
 Write-Host "[DONE] Seam AI Prep setup complete!"

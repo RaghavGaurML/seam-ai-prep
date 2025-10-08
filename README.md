@@ -58,11 +58,13 @@ Run your setup script to create the virtual environment and install dependencies
 
 ---
 
-### Additional Study Tools (If Time Permits)
+### Additional Study Tools
 
 **Git Branching:** https://learngitbranching.js.org
 
 **Security + Linux Commands:** https://overthewire.org/wargames/
+
+**LangGraph:** https://academy.langchain.com/
 
 ---
 

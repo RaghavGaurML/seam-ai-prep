@@ -15,6 +15,7 @@ class Person:
             return f"I work as a {self.job}."
         return "I am currently in between jobs."
 
+
 class Company:
     def __init__(self, name: str, employees: list[Person]) -> None:
         self.name = name
@@ -26,6 +27,7 @@ class Company:
 
     def list_employees(self) -> list[str]:
         return [employee.name for employee in self.employees]
+
 
 if __name__ == "__main__":
     alice = Person("Alice", 30, "Engineer")

@@ -12,8 +12,10 @@ console = Console()
 @app.command()
 def main():
     """Console script for raghav_cookiecutter_python_boilerplate."""
-    console.print("Replace this message by putting your code into "
-               "raghav_cookiecutter_python_boilerplate.cli.main")
+    console.print(
+        "Replace this message by putting your code into "
+        "raghav_cookiecutter_python_boilerplate.cli.main"
+    )
     console.print("See Typer documentation at https://typer.tiangolo.com/")
     utils.do_something_useful()
 

@@ -1,0 +1,30 @@
+# Seam AI Prep — pyproject.toml
+# Purpose: Central config for formatting, linting, and typing tools
+
+[project]
+name = "seam-ai-prep"
+version = "0.1.0"
+description = "Seam AI prep project for learning FastAPI, Pydantic, and Python tooling"
+requires-python = ">=3.10"
+
+# Optional project dependencies (uncomment if needed later)
+# dependencies = [
+#   "fastapi==0.115.0",
+#   "pydantic==2.3.0"
+# ]
+
+# -------------------------------
+# Code Formatting (Black)
+# -------------------------------
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+
+# -------------------------------
+# Linting (Ruff)
+# -------------------------------
+[tool.ruff]
+line-length = 88
+fix = true
+select = ["E", "F", "W", "I", "UP"]
+ignore = ["E501"]                   # Ignore line len

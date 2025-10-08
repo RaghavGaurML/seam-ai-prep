@@ -6,11 +6,16 @@ $scriptPath = Split-Path -Parent $MyInvocation.MyCommand.Definition
 $projectRoot = Split-Path -Parent $scriptPath
 Set-Location $projectRoot
 
+# -------------------------------
+# TODO: Streamline this code, $rootPath isn't used anywhere else
+# and we could just use $projectRoot instead 
+# -------------------------------
+
 # Define paths for root .venv and the day-specific folder
 $rootVenvPath = ".venv"
 $rootPath = ".\"
 $requirementsFile = Join-Path $rootPath "requirements.txt"
-$pyprojectFile = Join-Path $rootPath "pyproject.toml"
+# $pyprojectFile = Join-Path $rootPath "pyproject.toml"
 
 # Create or reuse the virtual environment
 if (-not (Test-Path $rootVenvPath)) {

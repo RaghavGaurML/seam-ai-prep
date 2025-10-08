@@ -26,5 +26,5 @@ target-version = ["py310"]
 [tool.ruff]
 line-length = 88
 fix = true
-select = ["E", "F", "W", "I", "UP"]
-ignore = ["E501"]                   # Ignore line len
+lint.select = ["E", "F", "W", "I", "UP"]
+lint.ignore = ["E501"]                   # Ignore line len

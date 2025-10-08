@@ -1,5 +1,5 @@
 # Implement simple functions with type hints
-from typing import List
+
 
 def greet(name: str) -> str:
     """Return a greeting message for the given name."""
@@ -14,13 +14,13 @@ def subtract(a: int, b: int) -> int:
     return a - b
 
 def multiply(a: int, b: int) -> int:
-    """Return the product of two integers."""  
+    """Return the product of two integers."""
     return a * b
 
 def divide(a: int, b: int) -> float:
     """Return the division of two integers."""
     if b == 0:
-        raise ValueError("Cannot divide by zero.")  
+        raise ValueError("Cannot divide by zero.")
     return a / b
 
 if __name__ == "__main__":
@@ -31,7 +31,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     func = sys.argv[1]
-    args: List[str] = sys.argv[2:]
+    args: list[str] = sys.argv[2:]
 
     match func:
         case "greet":

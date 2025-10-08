@@ -1,5 +1,5 @@
 # Implement some classes with type hints
-from typing import List
+
 
 class Person:
     def __init__(self, name: str, age: int, job: None | str) -> None:
@@ -16,7 +16,7 @@ class Person:
         return "I am currently in between jobs."
 
 class Company:
-    def __init__(self, name: str, employees: List[Person]) -> None:
+    def __init__(self, name: str, employees: list[Person]) -> None:
         self.name = name
         self.employees = employees
 
@@ -24,7 +24,7 @@ class Company:
         print(f"Adding employee: {person.name}")
         self.employees.append(person)
 
-    def list_employees(self) -> List[str]:
+    def list_employees(self) -> list[str]:
         return [employee.name for employee in self.employees]
 
 if __name__ == "__main__":

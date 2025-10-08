@@ -1,5 +1,5 @@
 # functions_practice.py
-from typing import Callable, Sequence
+from collections.abc import Callable, Sequence
 
 
 def average(numbers: Sequence[int]) -> float:

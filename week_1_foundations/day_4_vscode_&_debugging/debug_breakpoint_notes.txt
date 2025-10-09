@@ -1,0 +1,65 @@
+## Debugging vs Print Statements Notes
+
+### 💡 What is a Breakpoint?
+
+A **breakpoint** is a marker in your code that tells the program to *pause execution* at that exact line.
+When paused, you can inspect variables, step through code, and understand what’s happening in real time.
+
+---
+
+### 🖨️ Why Not Just Use Print Statements?
+
+Print statements show variable values, but they have major limitations:
+
+| Feature                         | `print()`              | Breakpoint                    |
+| ------------------------------- | ---------------------- | ----------------------------- |
+| View all variables              | ❌ Only what you print  | ✅ See every variable in scope |
+| Step through code               | ❌ Can’t                | ✅ Step line-by-line           |
+| Modify values live              | ❌ No                   | ✅ Yes                         |
+| Async / multithreaded debugging | ❌ Messy output         | ✅ Clear and organized         |
+| Clean code (no extra prints)    | ❌ Need to delete later | ✅ No code changes             |
+
+---
+
+### 🧠 Key Advantages of Breakpoints
+
+1. **Inspect everything:**
+   You can see all variables, local and global, without adding print statements.
+
+2. **Step through code:**
+   Use:
+
+   * **Step Into** → go inside a function call
+   * **Step Over** → execute a line without diving in
+   * **Step Out** → finish the current function and return to the caller
+
+3. **Modify state live:**
+   You can change variable values, run custom expressions, or test different inputs on the fly.
+
+4. **Keep your code clean:**
+   Debugging doesn’t clutter your file with extra logs — it’s all handled by the IDE (like VSCode).
+
+5. **Async and threads:**
+   With asynchronous code or multiple threads, print statements get jumbled.
+   Debuggers show exactly *which coroutine or thread* is running and what it’s doing.
+
+---
+
+### ⚙️ In Short
+
+| Task                  | Print | Debugger |
+| --------------------- | ----- | -------- |
+| View all state        | ❌     | ✅        |
+| Step control          | ❌     | ✅        |
+| Modify live           | ❌     | ✅        |
+| Works well with async | ❌     | ✅        |
+| Keeps code clean      | ❌     | ✅        |
+
+---
+
+### 🧩 TL;DR
+
+Use **print()** for quick sanity checks.
+Use **breakpoints** for serious debugging — they’re cleaner, faster, and far more powerful.
+
+---

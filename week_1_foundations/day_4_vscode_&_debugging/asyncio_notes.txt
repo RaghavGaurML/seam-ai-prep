@@ -1,0 +1,35 @@
+# Understanding Async Functions in Python
+
+## What Async Means
+- "async" lets a function pause itself without freezing the whole program.
+- It’s ideal for tasks that involve waiting (network requests, file I/O, etc.).
+
+## Syntax
+- Define an async function:
+    async def my_func():
+        await some_async_operation()
+- Run it with:
+    asyncio.run(my_func())
+
+## Key Terms
+- coroutine: a function declared with `async def`
+- await: pauses the coroutine until the awaited task finishes
+
+## Analogy
+Async is like a waiter taking multiple orders — they can serve others while waiting for food to arrive.
+
+## When to Use
+- ✅ Web/API calls, database queries, file I/O
+- ❌ Heavy computation (use multiprocessing instead)
+
+## Example
+import asyncio
+
+def greet(name):
+    print(f"Hello, {name}!")
+
+async def async_greet(name):
+    await asyncio.sleep(1)
+    greet(name)
+
+asyncio.run(async_greet("Raghav"))

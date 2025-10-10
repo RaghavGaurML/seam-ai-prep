@@ -1,0 +1,8 @@
+Pydantic is a Python library that uses type hints to validate, parse,
+and serialize data at runtime. It automatically converts untrusted
+input (like JSON) into clean, type-checked Python objects, ensuring
+fields match expected types and formats. This helps prevent bad data
+from entering your system, eliminates manual validation code, and
+provides clear, structured error messages. Pydantic is widely used in
+frameworks like FastAPI to enforce data integrity, generate schemas,
+and keep APIs type-safe and maintainable.

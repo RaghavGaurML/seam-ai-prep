@@ -6,3 +6,56 @@ from entering your system, eliminates manual validation code, and
 provides clear, structured error messages. Pydantic is widely used in
 frameworks like FastAPI to enforce data integrity, generate schemas,
 and keep APIs type-safe and maintainable.
+
+---------------------------------------------------------------------------------------------
+
+Ruff → A super-fast linter that catches code style, import, 
+and logic issues before runtime.
+
+Black → An automatic code formatter that enforces a consistent 
+Python style every time you save.
+
+Typing → Adds explicit type hints (str, int, List[...], etc.) 
+so tools can detect type errors early.
+
+Pydantic → Uses those type hints at runtime 
+to validate and serialize data (like API inputs or configs).
+
+✅ In short:
+Typing defines what your data should be,
+Pydantic enforces it at runtime,
+Ruff checks your code’s correctness,
+and Black keeps it pretty.
+
+---------------------------------------------------------------------------------------------
+
+✅ Pydantic models are used for:
+
+    * Input/output validation, e.g. making sure data from APIs, users, or databases matches the expected schema.
+
+    * Defining data contracts between components — they automatically enforce types and rules.
+
+    * Acting as “smart data containers” that keep your system’s data clean and consistent.
+
+✅ Normal functions / class methods are used for:
+
+    * Business logic, like computing prices, 
+            transforming data, or interacting with APIs.
+
+    * Anything that isn’t just checking or shaping data
+             — basically, the work your app does once the data is valid.
+
+---------------------------------------------------------------------------------------------
+
+from pydantic import BaseModel, EmailStr
+
+class User(BaseModel):
+    name: str
+    email: EmailStr
+    age: int
+
+    def is_adult(self) -> bool:
+        return self.age >= 18
+
+    def greeting(self) -> str:
+        return f"Hello, {self.name}! Your email is {self.email}."

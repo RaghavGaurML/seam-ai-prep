@@ -1,0 +1,7 @@
+Core: @staticmethod, @classmethod, @property
+
+Validation (Pydantic): @field_validator, @model_validator
+
+Web (FastAPI): @app.get, @app.post
+
+Testing (Pytest): @pytest.mark.parametrize, @pytest.fixture

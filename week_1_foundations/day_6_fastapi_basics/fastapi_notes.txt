@@ -1,0 +1,43 @@
+FastAPI handles requests from users, vets them to see if they're
+valid, grabs the correct function (our own code that we write), gets
+the return value (the response), formats it and returns the response
+to the users
+
+---------------------------------------------------------------------
+
+Cleaned-Up Notes
+
+FastAPI:
+1. Request comes in → A user or client calls your API (like entering a
+URL in a browser or a mobile app asking for data).
+
+2. Validation & routing → FastAPI checks:
+        * Is the request valid (e.g., are the right parameters included and of
+    the correct type)?
+
+        * Which endpoint/function should handle this request?
+
+3. Call your function → FastAPI passes the validated input to your
+code. This is where you define the logic: calculations, database
+queries, or whatever your API is supposed to do.
+
+4. Get the response → Your function returns some data (like a Python
+dictionary).
+
+5. Format & send → FastAPI converts your return value into a format the
+client understands (usually JSON) and sends it back over HTTP.
+
+---------------------------------------------------------------------
+
+An endpoint is the URL (or route) that a client calls to interact with your API, 
+not the function itself.
+
+    * Endpoint → The “address” where your API listens for requests. Example: /hello or /temperature.
+
+    * Function → The code you wrote that runs when that endpoint is called.
+
+In FastAPI, you link a function to an endpoint using a decorator:
+
+@app.get("/hello")  # <-- This is the endpoint (URL path)
+def say_hello(name: str):  # <-- This is the function that runs when someone calls /hello
+    return {"message": f"Hello, {name}!"}

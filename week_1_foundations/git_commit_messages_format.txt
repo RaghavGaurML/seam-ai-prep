@@ -1,0 +1,11 @@
+<type>(<scope>): <short summary>
+
+<optional longer description>
+
+* type → what kind of change it is (feat, fix, refactor, docs, test, chore)
+
+* scope → optional area of the code affected (auth, api, db)
+
+* short summary → 50 characters or less, imperative tense (“Add” not “Added”)
+
+* long description → optional, explains why or how the change was made

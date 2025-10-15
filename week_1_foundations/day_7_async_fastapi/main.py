@@ -7,6 +7,8 @@ app = FastAPI()
 
 
 # “Whenever a client makes a GET request to /hello, run this function.”
+# We return dictionaries with FastAPI because it automatically serializes responses to JSON, and JSON must have a top-level object (dictionary or list).
+# We use asyncio.sleep() instead of time.sleep() as it models tasks running parallel
 @app.get("/hello")
 async def hello():
     await asyncio.sleep(0.1)

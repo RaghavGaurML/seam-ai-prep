@@ -1,7 +1,7 @@
 # Note: this is similar to the synchronous functions implemented in Day 6 - FastAPI Basics
 import asyncio
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 
 app = FastAPI()
 
@@ -35,4 +35,6 @@ async def predict(data: dict):
 @app.get("/user/user_id")
 async def get_user(user_id: int):
     user = await fetch_user(user_id)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
     return user

@@ -7,6 +7,7 @@ app = FastAPI()
 
 
 # Splitting into fetch_user and get_user separates data retrieval from the API route, making the code more reusable, testable, and maintainable.
+# Actually retrieves user data from a database, API, or external source.
 async def fetch_user(user_id: int):
     # Simulate a slow database or API call
     await asyncio.sleep(0.3)
@@ -30,6 +31,7 @@ async def predict(data: dict):
     return {"prediction": sum(data.values())}  # dummy prediction
 
 
+# Handles incoming requests and uses fetch_user() to get the data; may add validation or formatting.
 @app.get("/user/user_id")
 async def get_user(user_id: int):
     user = await fetch_user(user_id)

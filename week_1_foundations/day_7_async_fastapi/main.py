@@ -7,7 +7,7 @@ app = FastAPI()
 # ---------------------------
 # Data layer (simulated DB)
 # ---------------------------
-fake_db = {}  # Simulated database
+fake_db: dict = {}  # Simulated database
 
 
 # Splitting into fetch_user and get_user separates data retrieval from the API route, making the code more reusable, testable, and maintainable.

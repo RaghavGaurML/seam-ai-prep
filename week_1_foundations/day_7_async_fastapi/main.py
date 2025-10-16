@@ -10,14 +10,14 @@ app = FastAPI()
 fake_db: dict = {}  # Simulated database
 
 
-# Splitting into fetch_user and get_user separates data retrieval from the API route, making the code more reusable, testable, and maintainable.
+# Splitting into fetch_user and get_user separates data retrieval from the API route,
+# making the code more reusable, testable, and maintainable.
 # Actually retrieves user data from a database, API, or external source.
 async def fetch_user(user_id: int):
     """Fetch user data from the 'database'."""
     # Simulate a slow database or API call
     await asyncio.sleep(0.3)
-    names = ["Alice", "Bob", "Carol", "Dave"]
-    return {"id": user_id, "name": names[user_id % 4], "role": "Engineer"}
+    return fake_db.get(user_id)
 
 
 async def insert_user(user_data: dict):
@@ -32,7 +32,8 @@ async def insert_user(user_data: dict):
 # API layer
 # ---------------------------
 # “Whenever a client makes a GET request to /hello, run this function.”
-# We return dictionaries with FastAPI because it automatically serializes responses to JSON, and JSON must have a top-level object (dictionary or list).
+# We return dictionaries with FastAPI because it automatically
+# serializes responses to JSON, and JSON must have a top-level object (dictionary or list).
 # We use asyncio.sleep() instead of time.sleep() as it models tasks running parallel
 @app.get("/hello")
 async def hello():
@@ -40,15 +41,17 @@ async def hello():
     return {"message": "hello async world!"}
 
 
-# “When a client sends a POST request to /predict, call this function with the data they sent.”
+# “When a client sends a POST request to /predict,
+# call this function with the data they sent.”
 @app.post("/predict")
 async def predict(data: dict):
     await asyncio.sleep(0.2)
     return {"prediction": sum(data.values())}  # dummy prediction
 
 
-# Handles incoming requests and uses fetch_user() to get the data; may add validation or formatting.
-@app.get("/user/user_id")
+# Handles incoming requests and uses fetch_user() to get the data;
+# may add validation or formatting.
+@app.get("/user/{user_id}")
 async def get_user(user_id: int):
     """
     API endpoint for getting a user's info.
@@ -70,5 +73,4 @@ async def create_user(user_data: dict):
         raise HTTPException(status_code=400, detail="Name is required")
 
     user = await insert_user(user_data)
-    return {"message": "User created successfully", "user": user}
     return {"message": "User created successfully", "user": user}

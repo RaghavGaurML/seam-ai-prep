@@ -31,8 +31,6 @@ async def insert_user(user_data: dict):
 # ---------------------------
 # API layer
 # ---------------------------
-
-
 # “Whenever a client makes a GET request to /hello, run this function.”
 # We return dictionaries with FastAPI because it automatically serializes responses to JSON, and JSON must have a top-level object (dictionary or list).
 # We use asyncio.sleep() instead of time.sleep() as it models tasks running parallel
@@ -72,4 +70,5 @@ async def create_user(user_data: dict):
         raise HTTPException(status_code=400, detail="Name is required")
 
     user = await insert_user(user_data)
+    return {"message": "User created successfully", "user": user}
     return {"message": "User created successfully", "user": user}

@@ -1,4 +1,4 @@
-# main.py → acts as a server. It receives incoming requests (like /user/1 or /predict),
+# main.py → acts as a server (web service). It receives incoming requests (like /user/1 or /predict),
 # routes them to the correct async function, and sends responses back.
 import asyncio
 

@@ -27,3 +27,14 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+# Real-world production pattern example
+# @app.get("/aggregate")
+# async def aggregate_data():
+#     async with httpx.AsyncClient() as client:
+#         tasks = [
+#             client.get("https://api.github.com"),
+#             client.get("https://jsonplaceholder.typicode.com/todos/1")
+#         ]
+#         responses = await asyncio.gather(*tasks)
+#     return [r.json() for r in responses]

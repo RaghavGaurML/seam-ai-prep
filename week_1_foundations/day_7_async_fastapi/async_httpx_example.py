@@ -7,26 +7,43 @@ import asyncio
 import httpx
 
 
-# Simulate calling multiple APIs in parallel
-async def fetch_data(client, url: str):
+# Fetch GET requests (e.g., /hello)
+async def fetch_get(client, url):
     response = await client.get(url)
-    return {"url": url, "status": response.status_code}
+    return {
+        "url": url,
+        "method": "GET",
+        "status": response.status_code,
+        "response": response.json(),
+    }
+
+
+# Fetch POST requests (e.g., /predict)
+async def fetch_post(client, url, data):
+    response = await client.post(url, json=data)
+    return {
+        "url": url,
+        "method": "POST",
+        "status": response.status_code,
+        "response": response.json(),
+    }
 
 
 async def main():
-    urls = [
-        "https://httpbin.org/get",
-        "https://api.github.com",
-        "https://jsonplaceholder.typicode.com/todos/1",
-    ]
-
     async with httpx.AsyncClient() as client:
-        # Launch all requests at once
-        tasks = [fetch_data(client, url) for url in urls]
+        # Define GET and POST tasks
+        tasks = [
+            fetch_get(client, "http://127.0.0.1:8000/hello"),
+            fetch_post(client, "http://127.0.0.1:8000/predict", {"a": 2, "b": 3}),
+            fetch_post(client, "http://127.0.0.1:8000/predict", {"x": 10, "y": 5}),
+        ]
+
+        # Run all tasks concurrently
         results = await asyncio.gather(*tasks)
 
-    for r in results:
-        print(r)
+        # Print results neatly
+        for result in results:
+            print(result)
 
 
 if __name__ == "__main__":

@@ -64,7 +64,7 @@ Run your setup script to create the virtual environment and install dependencies
 
 **Security + Linux Commands:** https://overthewire.org/wargames/
 
-**LangGraph:** https://academy.langchain.com/
+**LangGraph:** https://academy.langchain.com/, https://www.youtube.com/watch?v=jGg_1h0qzaM&t=524s
 
 ---
 

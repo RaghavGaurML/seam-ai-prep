@@ -18,6 +18,7 @@ __pycache__/
 *.pyd
 
 # Jupyter notebooks
+*.ipynb
 .ipynb_checkpoints/
 
 # Python files

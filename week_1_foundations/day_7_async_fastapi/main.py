@@ -1,3 +1,5 @@
+# main.py → acts as a server. It receives incoming requests (like /user/1 or /predict),
+# routes them to the correct async function, and sends responses back.
 import asyncio
 
 from fastapi import FastAPI, HTTPException

@@ -1,3 +1,7 @@
+# async_httpx_example.py → acts as a client.
+# It sends outgoing requests to external APIs (or even to your own FastAPI app),
+#  waits for responses efficiently using async I/O,
+# and automatically cleans up open connections when done.
 import asyncio
 
 import httpx

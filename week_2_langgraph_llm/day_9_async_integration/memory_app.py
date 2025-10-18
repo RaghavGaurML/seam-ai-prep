@@ -36,7 +36,7 @@ def build_graph():
 
     # Setting an entrypoint like "reply" lets the graph start execution there,
     # so we don’t need to use the special START node when there’s only one starting node.
-    graph.set_entrypoint("reply")
+    graph.set_entry_point("reply")
     graph.add_edge("reply", "reflect")
     graph.add_edge("reflect", END)
 

@@ -68,7 +68,7 @@ Run your setup script to create the virtual environment and install dependencies
 
 ---
 
-## 🧩 Folder Structure (Tentative - Currently on Day 8)
+## 🧩 Folder Structure (Tentative - Currently on Day 9)
 
 ```powershell
 seam-ai-prep/

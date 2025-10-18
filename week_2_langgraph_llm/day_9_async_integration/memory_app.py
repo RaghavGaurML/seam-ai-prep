@@ -13,7 +13,7 @@ class MemoryState(TypedDict):  # MemoryState inherits from TypedDict
 
 # reply_node – generates a new message
 def reply_node(state: MemoryState) -> MemoryState:
-    user_msg = state["messages"][-1]["content"]
+    user_msg = state["messages"][-1].content
     response = f"Got it! You said: '{user_msg}'."
     return {**state, "response": response}  # Old state is kept, response is reassigned
 

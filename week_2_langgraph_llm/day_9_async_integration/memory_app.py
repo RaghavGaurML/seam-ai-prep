@@ -1,5 +1,7 @@
 from typing import Annotated, TypedDict
 
+from langchain.schema import HumanMessage
+from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import END, StateGraph
 from langgraph.graph.message import add_messages
 
@@ -7,19 +9,22 @@ from langgraph.graph.message import add_messages
 # Annotated allows us to attach extra metadata
 # (like how to merge or validate a field) to a type without changing its core type definition.
 class MemoryState(TypedDict):  # MemoryState inherits from TypedDict
-    messages: Annotated[list, add_messages]
+    messages: Annotated[list[HumanMessage], add_messages]
     response: str
 
 
 # reply_node – generates a new message
 def reply_node(state: MemoryState) -> MemoryState:
+    # Access the last user message
     user_msg = state["messages"][-1].content
+    # Generate a response
     response = f"Got it! You said: '{user_msg}'."
     return {**state, "response": response}  # Old state is kept, response is reassigned
 
 
 # reflect_node – reflects on the conversation so far
 def reflect_node(state: MemoryState) -> MemoryState:
+    # Count number of messages so far
     count = len(state["messages"])
     reflection = f"So far, we’ve exchanged {count} messages."
     return {**state, "response": reflection}
@@ -47,18 +52,35 @@ def main():
     # Day 9 adds memory to accumulate state over time (e.g., messages),
     # while Day 8 only handles branching without persistent state.
     app = build_graph()
+    app.checkpointer = InMemorySaver()  # <- attach a checkpointer
+
+    # Define a thread_id for the conversation
+    thread_id = "conversation_1"
+
+    # Config required for checkpointer
+    config = {
+        "thread_id": thread_id,
+        "checkpoint_ns": "default",
+        "checkpoint_id": thread_id,
+    }
 
     # First input
-    state = {"messages": [{"role": "user", "content": "Hello!"}]}
-    result = app.invoke(state)
-    print(result["response"])
+    state = {"messages": [HumanMessage(content="Hello!")], "response": ""}
+    print(f"User: {state['messages'][-1].content}")  # print the current message
+    result = app.invoke(state, config=config)
+    print(f"Bot: {result['response']}")
 
     # Add another message — memory persists
-    new_state = app.update_state(
-        state, {"messages": [{"role": "user", "content": "How are you?"}]}
-    )
-    result2 = app.invoke(new_state)
-    print(result2["response"])
+    state["messages"].append(HumanMessage(content="How are you?"))
+    print(f"User: {state['messages'][-1].content}")  # print the current message
+    result2 = app.invoke(state, config=config)
+    print(f"Bot: {result2['response']}")
+
+    # Third message
+    state["messages"].append(HumanMessage(content="What’s up?"))
+    print(f"User: {state['messages'][-1].content}")  # print the current message
+    result3 = app.invoke(state, config=config)
+    print(f"Bot: {result3['response']}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,8 @@
+# FastAPI and web stack
+fastapi==0.118.0
+uvicorn==0.37.0
+pydantic==2.11.9
+httpx
+
+# LangGraph
+langgraph==0.6.8

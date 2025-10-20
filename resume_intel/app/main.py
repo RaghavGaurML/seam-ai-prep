@@ -5,11 +5,9 @@
 # -> Uses LangGraph for reasoning + extraction flow control.
 # -> Employs Pydantic models + typing for data contracts.
 # -> Is ready for extension into later “Job Matching” work (Day 13).
-from typing import cast
-
 from fastapi import FastAPI
 
-from app.graph import ResumeStateModel, compiled_graph
+from app.graph import ResumeInput, compiled_graph
 from app.models import AnalysisResult, Resume
 
 app = FastAPI(title="Resume Intelligence API")
@@ -17,6 +15,7 @@ app = FastAPI(title="Resume Intelligence API")
 
 @app.post("/analyze_resume", response_model=AnalysisResult)
 async def analyze_resume(resume: Resume):
-    state = cast(ResumeStateModel, {"resume": resume})
-    result = await compiled_graph.ainvoke(state)
+    # Pass ResumeInput to match graph input_type
+    init_state = ResumeInput(resume=resume)
+    result = await compiled_graph.ainvoke(init_state)
     return result

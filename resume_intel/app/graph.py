@@ -1,4 +1,4 @@
-from langgraph.graph import END, StateGraph
+from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel
 
 from app.models import AnalysisResult, ExperienceSummary, Resume, Skill
@@ -6,19 +6,26 @@ from app.services.extractors import extract_experience, extract_skills
 from app.services.summarizer import summarize_resume
 
 
-# Use a Pydantic BaseModel as the graph state
-class ResumeStateModel(BaseModel):
+# --- Input type for entry node ---
+class ResumeInput(BaseModel):
     resume: Resume
+
+
+# --- Full graph state ---
+class ResumeStateModel(ResumeInput):
     text: str | None = None
     skills: list[Skill] | None = None
     years: float | None = None
     summary: str | None = None
 
 
-# Build graph (module-level)
-graph = StateGraph(ResumeStateModel)
+# Create the StateGraph with the specified schemas
+graph: StateGraph[ResumeStateModel, ResumeInput] = StateGraph(
+    state_schema=ResumeStateModel
+)
 
 
+# --- Graph nodes ---
 async def parse_node(state: ResumeStateModel) -> ResumeStateModel:
     state.text = state.resume.text
     return state
@@ -47,13 +54,17 @@ async def format_node(state: ResumeStateModel) -> AnalysisResult:
     )
 
 
+# --- Add nodes and edges ---
 graph.add_node("parse", parse_node)
 graph.add_node("extract", extract_node)
 graph.add_node("summarize", summarize_node)
 graph.add_node("format", format_node)
+
+graph.add_edge(START, "parse")
 graph.add_edge("parse", "extract")
 graph.add_edge("extract", "summarize")
 graph.add_edge("summarize", "format")
 graph.add_edge("format", END)
 
+# --- Compile once for reuse ---
 compiled_graph = graph.compile()
